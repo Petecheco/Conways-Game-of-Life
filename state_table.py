@@ -1,5 +1,4 @@
 import copy
-
 import numpy as np
 
 class StateTable:
@@ -40,53 +39,11 @@ class StateTable:
 
     def get_live_neighbors(self, row, column):
         neighbors = 0
-        if row == 0 and column == 0:
-            neighbors += self.table[row + 1, column]
-            neighbors += self.table[row, column + 1]
-            neighbors += self.table[row + 1, column + 1]
-        elif row == 0 and column == self.columns - 1:
-            neighbors += self.table[row + 1, column]
-            neighbors += self.table[row, column - 1]
-            neighbors += self.table[row + 1, column - 1]
-        elif row == self.rows - 1 and column == 0:
-            neighbors += self.table[row - 1, column]
-            neighbors += self.table[row, column + 1]
-            neighbors += self.table[row - 1, column + 1]
-        elif row == self.rows - 1 and column == self.columns - 1:
-            neighbors += self.table[row - 1, column]
-            neighbors += self.table[row, column - 1]
-            neighbors += self.table[row - 1, column - 1]
-        elif row == 0:
-            neighbors += self.table[row + 1, column]
-            neighbors += self.table[row, column + 1]
-            neighbors += self.table[row + 1, column + 1]
-            neighbors += self.table[row, column - 1]
-            neighbors += self.table[row + 1, column - 1]
-        elif row == self.rows - 1:
-            neighbors += self.table[row - 1, column]
-            neighbors += self.table[row, column + 1]
-            neighbors += self.table[row - 1, column + 1]
-            neighbors += self.table[row, column - 1]
-        elif column == 0:
-            neighbors += self.table[row + 1, column]
-            neighbors += self.table[row - 1, column]
-            neighbors += self.table[row + 1, column + 1]
-            neighbors += self.table[row - 1, column + 1]
-            neighbors += self.table[row, column + 1]
-        elif column == self.columns - 1:
-            neighbors += self.table[row + 1, column]
-            neighbors += self.table[row - 1, column]
-            neighbors += self.table[row + 1, column - 1]
-            neighbors += self.table[row - 1, column - 1]
-            neighbors += self.table[row, column - 1]
-        else:
-            neighbors += self.table[row + 1, column]
-            neighbors += self.table[row - 1, column]
-            neighbors += self.table[row, column + 1]
-            neighbors += self.table[row, column - 1]
-            neighbors += self.table[row + 1, column + 1]
-            neighbors += self.table[row - 1, column + 1]
-            neighbors += self.table[row + 1, column - 1]
-            neighbors += self.table[row - 1, column - 1]
+        for i in [-1, 0, 1]:
+            for j in [-1, 0, 1]:
+                if i == 0 and j == 0:
+                    continue
+                if 0 <= row + i < self.rows and 0 <= column + j < self.columns:
+                    neighbors += self.table[row + i][column + j]
         return neighbors
 
